@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 9]><html class="lte-ie8" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    
+    <title>Template Title</title>
+    
+<!-- loading the css -->
+ <link href="static/css/bootstrap.css" rel="stylesheet">
+ <link href="static/css/custom-style.css" rel="stylesheet">
+
+ 
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="static/js/d3.v3.min.js"></script>
+    
+<!--import font to use -->
+<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet" type="text/css">
+ <body>
+  <!-- Navigation Bar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Automatic Collector</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/"><span class="glyphicon glyphicon-home"> Home</span></a></li>
+                    <li ><a href="about"><span class="glyphicon glyphicon-pencil"></span> About</a></li>
+                    <li><a href="contact"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
+                 </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+   
+
+ <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
+
+                <h1 class="page-header">
+                    Information on Tax Assistants in the UK<br/>
+                    <small>minor text on what the app is all about</small>
+                </h1>
+                 <button id="download" class="btn btn-primary">Download Data</button>
+            </div>
+             <!-- /.cols -->
+        </div>
+       <!-- /.row-->
+      </div>
+      <!-- /.container -->
+<script type="text/javascript">
+ var dataset = [];
+
+  d3.csv("/static/data/SimplifiedKS4.csv", function(data) {
+        dataset=data
+        
+        });
+
+$("#download").click(function() {
+ //   var json = $.parseJSON($("#json").val());
+    var csv = JSON2CSV(dataset);
+    window.open("data:text/csv;charset=utf-8," + escape(csv))
+});
+
+
+
+   
+function JSON2CSV(objArray) {
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var l1=['URN','SCHOOL NAME','TOWN','PCODE','Percentage of pupils starting Key Stage 4 in low prior attainment band','Percentage of pupils starting Key Stage 4 in middle prior attainment band','Percentage of pupils starting Key Stage 4 in high prior attainment band','Percentage of pupils achieving 5+ A*-C or equivalents including A*-C in both English and mathematics GCSEs', 'Percentage of pupils who are disadvantaged (receiving Free School Meals)', 'Number of disadvantaged pupils','Number of non-disadvantaged pupils'];
+    var str =  l1 + '\r\n';
+   
+    var line = '';
+
+  
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        var count=0;
+            for (var index in array[i]) {
+                line += array[i][index] + ',';
+                
+            }
+       
+        
+    
+       line = line.slice(0, -1);
+    
+        str += line + '\n';
+        
+        
+    }
+    return str;
+    
+}
+    
+
+</script>
+    
+ </body>
+</html>

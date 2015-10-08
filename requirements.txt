@@ -1,0 +1,5 @@
+Flask==0.10.1
+Flask-debugtoolbar==0.9.0
+Flask-BasicAuth
+
+gunicorn==18.0
